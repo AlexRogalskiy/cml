@@ -322,7 +322,7 @@ class CML {
   }
 
   async unregisterRunner(opts = {}) {
-    winston.info(`unregisterRunner called with: ${JSON.stringify(opts)}`);
+    winston.info(`cml.unregisterRunner called with: ${JSON.stringify(opts)}`);
     const res = await this.runnerByName(opts);
     console.log(res);
     winston.info(`this.runnerByName results: ${JSON.stringify(res)}`);

@@ -224,21 +224,24 @@ class Github {
   }
 
   async unregisterRunner(opts) {
+    winston.info(`driver.github.unregisterRunner`, opts);
     const { runnerId } = opts;
     const { owner, repo } = ownerRepo({ uri: this.repo });
     const { actions } = octokit(this.token, this.repo);
 
     if (typeof repo !== 'undefined') {
-      await actions.deleteSelfHostedRunnerFromRepo({
+      const res = await actions.deleteSelfHostedRunnerFromRepo({
         owner,
         repo,
         runner_id: runnerId
       });
+      winston.info('actions.deleteSelfHostedRunnerFromRepo response', res);
     } else {
-      await actions.deleteSelfHostedRunnerFromOrg({
+      const res = await actions.deleteSelfHostedRunnerFromOrg({
         org: owner,
         runner_id: runnerId
       });
+      winston.info('actions.deleteSelfHostedRunnerFromOrg response', res);
     }
   }
 

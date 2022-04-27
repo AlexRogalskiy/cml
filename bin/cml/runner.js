@@ -17,6 +17,7 @@ let RUNNER_SHUTTING_DOWN = false;
 const GH_5_MIN_TIMEOUT = (72 * 60 - 5) * 60 * 1000;
 
 const shutdown = async (opts) => {
+  winston.info('runner.shutdown');
   if (RUNNER_SHUTTING_DOWN) return;
   RUNNER_SHUTTING_DOWN = true;
 
@@ -41,6 +42,9 @@ const shutdown = async (opts) => {
       winston.info(`Unregistering runner ${name}...`);
       winston.info(`killing RUNNER pid: ${RUNNER.pid}`);
       RUNNER && RUNNER.kill('SIGINT');
+      winston.info(
+        'runner.shutdown.unregisterRunner calling cml.unregisterRunner'
+      );
       await cml.unregisterRunner({ name });
       winston.info('\tSuccess');
     } catch (err) {
@@ -117,7 +121,7 @@ const shutdown = async (opts) => {
 
     await destroyDockerMachine();
   }
-
+  winston.info('runner.shutdown calling destroyTerraform');
   await destroyTerraform();
 
   process.exit(error ? 1 : 0);
