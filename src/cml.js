@@ -331,7 +331,10 @@ class CML {
   }
 
   async runners(opts = {}) {
-    return await getDriver(this).runners(opts);
+    winston.info(`runners called with: ${JSON.stringify(opts)}`);
+    const result = await getDriver(this).runners(opts);
+    winston.info(`driver.runners: ${JSON.stringify(result)}`);
+    return result;
   }
 
   async runnerByName(opts = {}) {
