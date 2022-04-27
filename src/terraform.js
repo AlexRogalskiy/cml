@@ -44,10 +44,9 @@ const apply = async (opts = {}) => {
 const destroy = async (opts = {}) => {
   const { dir = './', target } = opts;
   const targetop = target ? `-target=${target}` : '';
-  winston.info('Running terraform destroy', { dir, target });
-  return await exec(
-    `TF_LOG_PROVIDER=TRACE terraform -chdir='${dir}' destroy -auto-approve ${targetop}`
-  );
+  const cmd = `TF_LOG=DEBUG TF_LOG_PROVIDER=TRACE terraform -chdir='${dir}' destroy -auto-approve ${targetop}`;
+  winston.info(`Running '${cmd}'`);
+  return await exec(cmd);
 };
 
 const mapCloudMetadata = (metadata) =>
