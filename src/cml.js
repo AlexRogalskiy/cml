@@ -322,7 +322,10 @@ class CML {
   }
 
   async unregisterRunner(opts = {}) {
-    const { id: runnerId } = await this.runnerByName(opts);
+    const res = await this.runnerByName(opts);
+    console.log(res);
+    winston.info(`this.runnerByName results: ${res}`);
+    const { id: runnerId } = res;
     return await getDriver(this).unregisterRunner({ runnerId, ...opts });
   }
 
