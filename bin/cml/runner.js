@@ -85,8 +85,11 @@ const shutdown = async (opts) => {
   };
 
   const destroyTerraform = async () => {
-    if (!tfResource) return;
-
+    winston.info(`runner.shutdown.destroyTerraform`);
+    if (!tfResource) {
+      winston.warn(`doing nothing -- tfResource: ${tfResource}`);
+      return;
+    }
     try {
       winston.info(await tf.destroy({ dir: tfPath }));
     } catch (err) {
@@ -105,6 +108,7 @@ const shutdown = async (opts) => {
 
   if (!cloud) {
     try {
+      winston.info(`calling bare unregisterRunner after sleep`);
       await unregisterRunner();
       await retryWorkflows();
     } catch (err) {

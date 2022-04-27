@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const { ltr } = require('semver');
+const winston = require('winston');
 const { exec } = require('./utils');
 
 const MIN_TF_VER = '0.14.0';
@@ -43,6 +44,7 @@ const apply = async (opts = {}) => {
 const destroy = async (opts = {}) => {
   const { dir = './', target } = opts;
   const targetop = target ? `-target=${target}` : '';
+  winston.info('Running terraform destroy', { dir, target });
   return await exec(
     `TF_LOG_PROVIDER=TRACE terraform -chdir='${dir}' destroy -auto-approve ${targetop}`
   );
