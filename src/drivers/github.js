@@ -290,6 +290,7 @@ class Github {
   }
 
   async runners(opts = {}) {
+    winston.info('driver.github.runners');
     const { owner, repo } = ownerRepo({ uri: this.repo });
     const { paginate, actions } = octokit(this.token, this.repo);
 
@@ -306,7 +307,9 @@ class Github {
         per_page: 100
       });
     }
-
+    winston.info(
+      `driver.github.runners api results: ${JSON.stringify(runners)}`
+    );
     return runners.map((runner) => this.parseRunner(runner));
   }
 
