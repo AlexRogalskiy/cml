@@ -41,6 +41,7 @@ const shutdown = async (opts) => {
       await cml.unregisterRunner({ name });
       winston.info('\tSuccess');
     } catch (err) {
+      winston.info(err);
       winston.error(`\tFailed: ${err.message}`);
     }
   };
@@ -84,7 +85,7 @@ const shutdown = async (opts) => {
     if (!tfResource) return;
 
     try {
-      winston.debug(await tf.destroy({ dir: tfPath }));
+      winston.info(await tf.destroy({ dir: tfPath }));
     } catch (err) {
       winston.error(`\tFailed destroying terraform: ${err.message}`);
     }
