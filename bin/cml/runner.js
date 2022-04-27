@@ -33,11 +33,13 @@ const shutdown = async (opts) => {
   const tfPath = workdir;
 
   const unregisterRunner = async () => {
-    winston.info(RUNNER);
-    if (!RUNNER) return;
-
+    if (!RUNNER) {
+      winston.info(`called unregister and RUNNER is dead already`);
+      return;
+    }
     try {
       winston.info(`Unregistering runner ${name}...`);
+      winston.info(`killing RUNNER pid: ${RUNNER.pid}`);
       RUNNER && RUNNER.kill('SIGINT');
       await cml.unregisterRunner({ name });
       winston.info('\tSuccess');

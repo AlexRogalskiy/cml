@@ -322,10 +322,10 @@ class CML {
   }
 
   async unregisterRunner(opts = {}) {
-    winston.info(`unregisterRunner called with: ${opts}`);
+    winston.info(`unregisterRunner called with: ${JSON.stringify(opts)}`);
     const res = await this.runnerByName(opts);
     console.log(res);
-    winston.info(`this.runnerByName results: ${res}`);
+    winston.info(`this.runnerByName results: ${JSON.stringify(res)}`);
     const { id: runnerId } = res;
     return await getDriver(this).unregisterRunner({ runnerId, ...opts });
   }
@@ -335,7 +335,7 @@ class CML {
   }
 
   async runnerByName(opts = {}) {
-    winston.info(`runnerByName called with: ${opts}`);
+    winston.info(`runnerByName called with: ${JSON.stringify(opts)}`);
     let { name, runners } = opts;
 
     if (!runners) runners = await this.runners(opts);
