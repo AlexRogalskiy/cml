@@ -44,7 +44,7 @@ const destroy = async (opts = {}) => {
   const { dir = './', target } = opts;
   const targetop = target ? `-target=${target}` : '';
   return await exec(
-    `terraform -chdir='${dir}' destroy -auto-approve ${targetop}`
+    `TF_LOG_PROVIDER=TRACE terraform -chdir='${dir}' destroy -auto-approve ${targetop}`
   );
 };
 

@@ -33,6 +33,7 @@ const shutdown = async (opts) => {
   const tfPath = workdir;
 
   const unregisterRunner = async () => {
+    winston.info(RUNNER);
     if (!RUNNER) return;
 
     try {

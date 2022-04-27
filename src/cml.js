@@ -322,6 +322,7 @@ class CML {
   }
 
   async unregisterRunner(opts = {}) {
+    winston.info(`unregisterRunner called with: ${opts}`);
     const res = await this.runnerByName(opts);
     console.log(res);
     winston.info(`this.runnerByName results: ${res}`);
@@ -334,6 +335,7 @@ class CML {
   }
 
   async runnerByName(opts = {}) {
+    winston.info(`runnerByName called with: ${opts}`);
     let { name, runners } = opts;
 
     if (!runners) runners = await this.runners(opts);
