@@ -46,6 +46,8 @@ const destroy = async (opts = {}) => {
   const targetop = target ? `-target=${target}` : '';
   const cmd = `TF_LOG=DEBUG TF_LOG_PROVIDER=TRACE terraform -chdir='${dir}' destroy -auto-approve ${targetop}`;
   winston.info(`Running '${cmd}'`);
+  process.env.TF_LOG = 'DEBUG';
+  process.env.TF_LOG_PROVIDER = 'DEBUG';
   return await exec(cmd);
 };
 
