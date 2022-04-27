@@ -301,11 +301,9 @@ class Github {
         per_page: 100
       });
     } else {
-      runners = await paginate(actions.listSelfHostedRunnersForRepo, {
-        owner,
-        repo,
-        per_page: 100
-      });
+      const opts = { owner, repo, per_page: 100 };
+      winston.info('actions.listSelfHostedRunnersForRepo', opts);
+      runners = await paginate(actions.listSelfHostedRunnersForRepo, opts);
     }
     winston.info(
       `driver.github.runners api results: ${JSON.stringify(runners)}`
@@ -314,6 +312,7 @@ class Github {
   }
 
   async runnerById(opts = {}) {
+    winston.info('driver.github.runnerById', opts);
     const { id } = opts;
     const { owner, repo } = ownerRepo({ uri: this.repo });
     const { actions } = octokit(this.token, this.repo);
